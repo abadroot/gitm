@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# Script per la visualizzazione dello stato
+# dei repo git locali e remoti
+#
+# Elenco repo nel file gitrepos in formato
+# Nomerepo Pathrepo
+
+
+CONFIGREPOS=".gitmrepos"
+
+# Funzioni
+
+read_press() {
+    echo ""
+    read -n 1 -s -r -p "Press any key to continue" < /dev/tty
+    echo ""
+    echo ""
+}
+
+usage() {
+    echo "gitm.sh [options]"
+    echo ""
+    echo "options:"
+    echo "--localstatus: Check the status of the local git repo"
+    echo "--remotestatus: Check the status of the remote git repo"
+    echo ""
+}
+
+
+# Parsing argomenti
+
+case "$1" in
+    --localstatus ) CMD="git status";;
+    --remotestatus ) CMD="git remote show origin";;
+    * ) usage && exit 1;;
+esac
+
+
+# Verifica esistenza file di configurazione
+
+if [ ! -f ~/$CONFIGREPOS ]; then
+  echo "The configuration file $CONFIGREPOS does not exist!"
+  echo ""
+  exit 1
+fi
+
+#
+
+clear
+
+while read LINE; do
+
+  REPONAME=$(echo $LINE | awk '{print $1}')
+  REPOPATH=$(echo $LINE | awk '{print $2}')
+
+  pushd $REPOPATH > /dev/null
+  echo " "
+  echo "Repo $REPONAME -  $REPOPATH"
+  echo "----------"
+  echo " "
+  eval "$CMD"
+  popd > /dev/null
+  read_press
+
+done < ~/$CONFIGREPOS
