@@ -51,6 +51,9 @@ clear
 
 while read LINE; do
 
+  # Ignore commented "#" lines
+  [[ $LINE = \#* ]] && continue
+
   REPONAME=$(echo $LINE | awk '{print $1}')
   REPOPATH=$(echo $LINE | awk '{print $2}')
 
