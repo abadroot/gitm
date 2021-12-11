@@ -22,8 +22,8 @@ usage() {
     echo "gitm.sh [options]"
     echo ""
     echo "options:"
-    echo "--localstatus: Check the status of the local git repo"
-    echo "--remotestatus: Check the status of the remote git repo"
+    echo "-ls | --localstatus : Check the status of the local git repo"
+    echo "-rs | --remotestatus : Check the status of the remote git repo"
     echo ""
 }
 
@@ -31,8 +31,8 @@ usage() {
 # Parsing argomenti
 
 case "$1" in
-    --localstatus ) CMD="git status";;
-    --remotestatus ) CMD="git remote show origin";;
+    --localstatus | -ls) CMD="git status";;
+    --remotestatus | -rs) CMD="git remote show origin";;
     * ) usage && exit 1;;
 esac
 

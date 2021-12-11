@@ -35,3 +35,13 @@ Example:
 TestRepo /home/user/TestRepo
 #TestOldRepo /home/user/TestOldRepo
 ```
+
+## Usage
+
+```
+gitm.sh [options]
+
+options:
+--localstatus | -ls : Check the status of the local git repo
+--remotestatus | -rs : Check the status of the remote git repo
+```
